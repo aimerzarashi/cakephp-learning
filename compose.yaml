@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+    env_file: ./php/.env
+    tty: true
+    volumes:
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./html:/var/www/html
+    ports:
+      - "8080:80" # apacheは80を使用
+    environment:
+      - TZ=Asia/Tokyo
