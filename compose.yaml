@@ -4,9 +4,41 @@ services:
     build:
       context: .
       dockerfile: ./php/Dockerfile
+    volumes:
+      - ./php/html/:/var/www/html/
     env_file: ./php/.env
     tty: true
     ports:
-      - "8080:80"
+      - 80:80
     environment:
       - TZ=Asia/Tokyo
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.3
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=my_database
+      - MYSQL_USER=my_user
+      - MYSQL_PASSWORD=my_password
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+    depends_on:
+      - php
+      - mysql
+    ports:
+      - 8081:80
