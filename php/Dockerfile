@@ -4,7 +4,11 @@ RUN curl -s https://getcomposer.org/installer | php \
   && mv composer.phar /usr/local/bin/composer
 
 RUN apt-get update \
-  && docker-php-ext-install pdo_mysql
+  && apt-get install -y unzip \
+  && apt-get install -y libicu-dev \
+  && docker-php-ext-install intl \
+  && docker-php-ext-install pdo_mysql \
+  && a2enmod rewrite
 
 COPY ./php/html/ /var/www/html/
 COPY ./php/php.ini /usr/local/etc/php/
