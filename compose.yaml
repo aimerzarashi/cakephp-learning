@@ -41,4 +41,4 @@ services:
       - php
       - mysql
     ports:
-      - 8081:80
+      - 8080:80
