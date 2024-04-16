@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\AbstractSeed;
@@ -20,7 +21,20 @@ class UsersSeed extends AbstractSeed
      */
     public function run(): void
     {
-        $data = [];
+        $data = [
+            [
+                'email' => 'user1@example.com',
+                'password' => 'user1',
+                'created' => date('Y-m-d H:i:s'),
+                'modified' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'email' => 'user2@example.com',
+                'password' => 'user2',
+                'created' => date('Y-m-d H:i:s'),
+                'modified' => date('Y-m-d H:i:s'),
+            ],
+        ];
 
         $table = $this->table('users');
         $table->insert($data)->save();

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\AbstractSeed;
@@ -20,7 +21,35 @@ class ArticlesSeed extends AbstractSeed
      */
     public function run(): void
     {
-        $data = [];
+        $data = [
+            [
+                'user_id' => 1,
+                'title' => 'First Post',
+                'slug' => 'first-post',
+                'body' => 'This is my first post.',
+                'published' => 1,
+                'created' => '2020-01-01 00:00:00',
+                'modified' => '2020-01-01 00:00:00',
+            ],
+            [
+                'user_id' => 1,
+                'title' => 'Second Post',
+                'slug' => 'second-post',
+                'body' => 'This is my second post.',
+                'published' => 1,
+                'created' => '2020-01-01 00:00:00',
+                'modified' => '2020-01-01 00:00:00',
+            ],
+            [
+                'user_id' => 2,
+                'title' => 'Third Post',
+                'slug' => 'third-post',
+                'body' => 'This is my third post.',
+                'published' => 1,
+                'created' => '2020-01-01 00:00:00',
+                'modified' => '2020-01-01 00:00:00',
+            ],
+        ];
 
         $table = $this->table('articles');
         $table->insert($data)->save();

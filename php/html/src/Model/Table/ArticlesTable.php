@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -7,6 +8,8 @@ use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Utility\Text;
+use Cake\Event\EventInterface;
 
 /**
  * Articles Model
@@ -48,15 +51,15 @@ class ArticlesTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
-        ]);
-        $this->belongsToMany('Tags', [
-            'foreignKey' => 'article_id',
-            'targetForeignKey' => 'tag_id',
-            'joinTable' => 'articles_tags',
-        ]);
+        // $this->belongsTo('Users', [
+        //     'foreignKey' => 'user_id',
+        //     'joinType' => 'INNER',
+        // ]);
+        // $this->belongsToMany('Tags', [
+        //     'foreignKey' => 'article_id',
+        //     'targetForeignKey' => 'tag_id',
+        //     'joinTable' => 'articles_tags',
+        // ]);
     }
 
     /**
@@ -65,37 +68,37 @@ class ArticlesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator
-    {
-        $validator
-            ->integer('user_id')
-            ->notEmptyString('user_id');
+    // public function validationDefault(Validator $validator): Validator
+    // {
+    //     $validator
+    //         ->integer('user_id')
+    //         ->notEmptyString('user_id');
 
-        $validator
-            ->scalar('title')
-            ->maxLength('title', 255)
-            ->requirePresence('title', 'create')
-            ->notEmptyString('title');
+    //     $validator
+    //         ->scalar('title')
+    //         ->maxLength('title', 255)
+    //         ->requirePresence('title', 'create')
+    //         ->notEmptyString('title');
 
-        $validator
-            ->scalar('slug')
-            ->maxLength('slug', 191)
-            ->requirePresence('slug', 'create')
-            ->notEmptyString('slug')
-            ->add('slug', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+    //     $validator
+    //         ->scalar('slug')
+    //         ->maxLength('slug', 191)
+    //         ->requirePresence('slug', 'create')
+    //         ->notEmptyString('slug')
+    //         ->add('slug', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-        $validator
-            ->scalar('body')
-            ->requirePresence('body', 'create')
-            ->notEmptyString('body');
+    //     $validator
+    //         ->scalar('body')
+    //         ->requirePresence('body', 'create')
+    //         ->notEmptyString('body');
 
-        $validator
-            ->boolean('published')
-            ->requirePresence('published', 'create')
-            ->notEmptyString('published');
+    //     $validator
+    //         ->boolean('published')
+    //         ->requirePresence('published', 'create')
+    //         ->notEmptyString('published');
 
-        return $validator;
-    }
+    //     return $validator;
+    // }
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -104,11 +107,20 @@ class ArticlesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->isUnique(['slug']), ['errorField' => 'slug']);
-        $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->isUnique(['slug']), ['errorField' => 'slug']);
+    //     $rules->add($rules->existsIn(['user_id'], 'Users'), ['errorField' => 'user_id']);
 
-        return $rules;
+    //     return $rules;
+    // }
+
+    public function beforeSave(EventInterface $event, $entity, $options)
+    {
+        if ($entity->isNew() && !$entity->slug) {
+            $sluggedTitle = Text::slug($entity->title);
+            // trim slug to maximum length defined in schema
+            $entity->slug = substr($sluggedTitle, 0, 191);
+        }
     }
 }
