@@ -55,6 +55,8 @@ class ArticlesTable extends Table
         //     'foreignKey' => 'user_id',
         //     'joinType' => 'INNER',
         // ]);
+
+        $this->belongsToMany('Tags'); // Add this line
         // $this->belongsToMany('Tags', [
         //     'foreignKey' => 'article_id',
         //     'targetForeignKey' => 'tag_id',
