@@ -68,37 +68,37 @@ class ArticlesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    // public function validationDefault(Validator $validator): Validator
-    // {
-    //     $validator
-    //         ->integer('user_id')
-    //         ->notEmptyString('user_id');
+    public function validationDefault(Validator $validator): Validator
+    {
+        //     $validator
+        //         ->integer('user_id')
+        //         ->notEmptyString('user_id');
 
-    //     $validator
-    //         ->scalar('title')
-    //         ->maxLength('title', 255)
-    //         ->requirePresence('title', 'create')
-    //         ->notEmptyString('title');
+        $validator
+            ->scalar('title')
+            ->maxLength('title', 255)
+            ->requirePresence('title', 'create')
+            ->notEmptyString('title');
 
-    //     $validator
-    //         ->scalar('slug')
-    //         ->maxLength('slug', 191)
-    //         ->requirePresence('slug', 'create')
-    //         ->notEmptyString('slug')
-    //         ->add('slug', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+        //     $validator
+        //         ->scalar('slug')
+        //         ->maxLength('slug', 191)
+        //         ->requirePresence('slug', 'create')
+        //         ->notEmptyString('slug')
+        //         ->add('slug', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-    //     $validator
-    //         ->scalar('body')
-    //         ->requirePresence('body', 'create')
-    //         ->notEmptyString('body');
+        $validator
+            ->scalar('body')
+            ->requirePresence('body', 'create')
+            ->notEmptyString('body');
 
-    //     $validator
-    //         ->boolean('published')
-    //         ->requirePresence('published', 'create')
-    //         ->notEmptyString('published');
+        //     $validator
+        //         ->boolean('published')
+        //         ->requirePresence('published', 'create')
+        //         ->notEmptyString('published');
 
-    //     return $validator;
-    // }
+        return $validator;
+    }
 
     /**
      * Returns a rules checker object that will be used for validating
