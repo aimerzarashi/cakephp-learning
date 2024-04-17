@@ -27,6 +27,8 @@ class ArticlesController extends AppController
       // when we build authentication out.
       $article->user_id = 1;
 
+      $article->published = false;
+
       if ($this->Articles->save($article)) {
         $this->Flash->success(__('Your article has been saved.'));
         return $this->redirect(['action' => 'index']);
