@@ -46,6 +46,7 @@ class ArticlesController extends AppController
   {
     $article = $this->Articles
       ->findBySlug($slug)
+      ->contain('Tags')
       ->firstOrFail();
 
     if ($this->request->is(['post', 'put'])) {
