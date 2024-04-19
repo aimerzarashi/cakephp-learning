@@ -51,6 +51,11 @@ class ArticlesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsToMany('Tags', [
+            'joinTable' => 'articles_tags',
+            'dependent' => true
+        ]);
+
         // $this->belongsTo('Users', [
         //     'foreignKey' => 'user_id',
         //     'joinType' => 'INNER',
