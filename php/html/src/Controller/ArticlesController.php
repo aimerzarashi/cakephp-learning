@@ -74,4 +74,17 @@ class ArticlesController extends AppController
       return $this->redirect(['action' => 'index']);
     }
   }
+
+  public function tags(...$tags)
+  {
+    // Use the ArticlesTable to find tagged articles.
+    $articles = $this->Articles->find('tagged', tags: $tags)
+      ->all();
+
+    // Pass variables into the view template context.
+    $this->set([
+      'articles' => $articles,
+      'tags' => $tags
+    ]);
+  }
 }
