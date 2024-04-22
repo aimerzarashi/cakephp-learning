@@ -12,3 +12,6 @@ RUN apt-get update \
 
 COPY ./php/html/ /var/www/html/
 COPY ./php/php.ini /usr/local/etc/php/
+
+WORKDIR /var/www/html/
+RUN composer install
